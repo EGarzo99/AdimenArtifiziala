@@ -112,7 +112,20 @@ def breadthFirstSearch(problem):
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+
+    ilara = util.PriorityQueue()
+    bisitatuak = []
+
+    ilara.push((problem.getStartState(), [], 0), 0)
+
+    while not ilara.isEmpty():
+        (node, path, cost) = ilara.pop()
+        if problem.isGoalState(node):
+            return path
+        if node not in bisitatuak:
+            bisitatuak.append(node)
+            for successor in problem.getSuccessors(node):
+                ilara.push((successor[0], path + [successor[1]], cost + successor[2]), cost + successor[2])
 
 def nullHeuristic(state, problem=None):
     """
