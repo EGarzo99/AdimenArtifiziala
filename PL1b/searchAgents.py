@@ -278,6 +278,7 @@ class CornersProblem(search.SearchProblem):
         # Please add any code here which you would like to use
         # in initializing the problem
         "*** YOUR CODE HERE ***"
+        self.corners_goal = [False, False, False, False]
 
     def getStartState(self):
         """
@@ -285,14 +286,22 @@ class CornersProblem(search.SearchProblem):
         space)
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        return self.startingPosition
 
     def isGoalState(self, state):
         """
         Returns whether this search state is a goal state of the problem.
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        if self.corners_goal == [True, True, True, False] and state == self.corners[3]:
+            return True
+        if self.corners_goal == [True, True, False, True] and state == self.corners[2]:
+            return True
+        if self.corners_goal == [True, False, True, True] and state == self.corners[1]:
+            return True
+        if self.corners_goal == [False, True, True, True] and state == self.corners[0]:
+            return True
+        return False
 
     def getSuccessors(self, state):
         """
@@ -315,6 +324,21 @@ class CornersProblem(search.SearchProblem):
             #   hitsWall = self.walls[nextx][nexty]
 
             "*** YOUR CODE HERE ***"
+            x, y = state
+            dx, dy = Actions.directionToVector(action)
+            nextx, nexty = int(x + dx), int(y + dy)
+            if self.walls[nextx][nexty]:
+                continue
+            successors.append(((nextx, nexty), action, 1))
+
+        if state == self.corners[0]:
+            self.corners_goal[0] = True
+        if state == self.corners[1]:
+            self.corners_goal[1] = True
+        if state == self.corners[2]:
+            self.corners_goal[2] = True
+        if state == self.corners[3]:
+            self.corners_goal[3] = True
 
         self._expanded += 1 # DO NOT CHANGE
         return successors
