@@ -56,9 +56,7 @@ def tinyMazeSearch(problem):
     sequence of moves will be incorrect, so only use this for tinyMaze.
     """
     from game import Directions
-    s = Directions.SOUTH
-    w = Directions.WEST
-    return  [s, s, w, s, w, w, s, w]
+    return  ['South', 'South', 'West', 'South', 'West', 'West', 'South', 'West']
 
 def depthFirstSearch(problem):
     """
@@ -75,17 +73,56 @@ def depthFirstSearch(problem):
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    
+    pila = util.Stack()
+    bisitatuak = []
+
+    pila.push((problem.getStartState(), []))
+
+    while not pila.isEmpty(): 
+        (node, path) = pila.pop()
+        if problem.isGoalState(node):
+            return path
+        if node not in bisitatuak:
+            bisitatuak.append(node)
+            for successor in problem.getSuccessors(node):
+                pila.push((successor[0], path + [successor[1]]))
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+
+    ilara = util.Queue()
+    bisitatuak = []
+
+    ilara.push((problem.getStartState(), []))
+
+    while not ilara.isEmpty():
+        (node, path) = ilara.pop()
+        if problem.isGoalState(node):
+            return path
+        if node not in bisitatuak:
+            bisitatuak.append(node)
+            for successor in problem.getSuccessors(node):
+                ilara.push((successor[0], path + [successor[1]]))
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+
+    ilara = util.PriorityQueue()
+    bisitatuak = []
+
+    ilara.push((problem.getStartState(), [], 0), 0)
+
+    while not ilara.isEmpty():
+        (node, path, cost) = ilara.pop()
+        if problem.isGoalState(node):
+            return path
+        if node not in bisitatuak:
+            bisitatuak.append(node)
+            for successor in problem.getSuccessors(node):
+                ilara.push((successor[0], path + [successor[1]], cost + successor[2]), cost + successor[2])
 
 def nullHeuristic(state, problem=None):
     """
