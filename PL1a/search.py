@@ -73,8 +73,8 @@ def depthFirstSearch(problem):
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
     "*** YOUR CODE HERE ***"
-    
-    pila = util.Stack()
+
+    pila = util.Stack() 
     bisitatuak = []
 
     pila.push((problem.getStartState(), []))

@@ -73,8 +73,8 @@ def depthFirstSearch(problem):
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
     "*** YOUR CODE HERE ***"
-    
-    pila = util.Stack()
+
+    pila = util.Stack() 
     bisitatuak = []
 
     pila.push((problem.getStartState(), []))
@@ -134,8 +134,20 @@ def nullHeuristic(state, problem=None):
 def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
 
+    ilara = util.PriorityQueue()
+    bisitatuak = []
+
+    ilara.push((problem.getStartState(), [], 0), 0)
+
+    while not ilara.isEmpty():
+        (node, path, cost) = ilara.pop()
+        if problem.isGoalState(node):
+            return path
+        if node not in bisitatuak:
+            bisitatuak.append(node)
+            for successor in problem.getSuccessors(node):
+                ilara.push((successor[0], path + [successor[1]], cost + successor[2]), cost + successor[2] + heuristic(successor[0], problem))
 
 # Abbreviations
 bfs = breadthFirstSearch
