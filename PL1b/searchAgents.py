@@ -278,7 +278,7 @@ class CornersProblem(search.SearchProblem):
         # Please add any code here which you would like to use
         # in initializing the problem
         "*** YOUR CODE HERE ***"
-        self.corners_goal = [False, False, False, False]
+        self.startState = (self.startingPosition, [False, False, False, False])
 
     def getStartState(self):
         """
@@ -286,22 +286,17 @@ class CornersProblem(search.SearchProblem):
         space)
         """
         "*** YOUR CODE HERE ***"
-        return self.startingPosition
+        return self.startState
 
     def isGoalState(self, state):
         """
         Returns whether this search state is a goal state of the problem.
         """
         "*** YOUR CODE HERE ***"
-        if self.corners_goal == [True, True, True, False] and state == self.corners[3]:
-            return True
-        if self.corners_goal == [True, True, False, True] and state == self.corners[2]:
-            return True
-        if self.corners_goal == [True, False, True, True] and state == self.corners[1]:
-            return True
-        if self.corners_goal == [False, True, True, True] and state == self.corners[0]:
-            return True
-        return False
+        position, corners_goal = state
+        if position in self.corners:
+            corners_goal[self.corners.index(position)] = True
+        return all(corners_goal)
 
     def getSuccessors(self, state):
         """
@@ -323,22 +318,15 @@ class CornersProblem(search.SearchProblem):
             #   nextx, nexty = int(x + dx), int(y + dy)
             #   hitsWall = self.walls[nextx][nexty]
 
-            "*** YOUR CODE HERE ***"
-            x, y = state
+            position, corners_goal = state
+            x, y = position
             dx, dy = Actions.directionToVector(action)
             nextx, nexty = int(x + dx), int(y + dy)
-            if self.walls[nextx][nexty]:
-                continue
-            successors.append(((nextx, nexty), action, 1))
-
-        if state == self.corners[0]:
-            self.corners_goal[0] = True
-        if state == self.corners[1]:
-            self.corners_goal[1] = True
-        if state == self.corners[2]:
-            self.corners_goal[2] = True
-        if state == self.corners[3]:
-            self.corners_goal[3] = True
+            if not self.walls[nextx][nexty]:
+                next_corners_goal = corners_goal[:]
+                if (nextx, nexty) in self.corners:
+                    next_corners_goal[self.corners.index((nextx, nexty))] = True
+                successors.append((((nextx, nexty), next_corners_goal), action, 1))
 
         self._expanded += 1 # DO NOT CHANGE
         return successors
