@@ -366,8 +366,8 @@ def cornersHeuristic(state, problem):
     corners = [corner for corner, goal in zip(corners, corners_goal) if not goal]  
     if not corners:
         return 0
-    return min([util.manhattanDistance(position, corner) for corner in corners])
-
+    return sum([util.manhattanDistance(position, corner) for corner in corners])
+    # sum() eta max() min baino hobe? 
 
 class AStarCornersAgent(SearchAgent):
     "A SearchAgent for FoodSearchProblem using A* and your foodHeuristic"
