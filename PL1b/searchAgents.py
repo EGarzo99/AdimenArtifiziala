@@ -294,8 +294,6 @@ class CornersProblem(search.SearchProblem):
         """
         "*** YOUR CODE HERE ***"
         position, corners_goal = state
-        if position in self.corners:
-            corners_goal[self.corners.index(position)] = True
         return all(corners_goal)
 
     def getSuccessors(self, state):
@@ -366,8 +364,21 @@ def cornersHeuristic(state, problem):
     corners = [corner for corner, goal in zip(corners, corners_goal) if not goal]  
     if not corners:
         return 0
-    return sum([util.manhattanDistance(position, corner) for corner in corners])
-    # sum() eta max() min baino hobe? 
+    elif len(corners) == 1:
+        return util.manhattanDistance(position, corners[0])
+    else:
+        max = -1
+        min = 999999
+        for element in corners:
+            distance = util.manhattanDistance(position, element)
+            if distance < min:
+                min = distance
+                minElem = element
+            if distance > max:
+                max = distance
+                maxElem = element
+        return min + util.manhattanDistance(maxElem, minElem)
+    # corner bat baino gehiago falta bada haien arteko distantzia + gertuenerako distantzia
 
 class AStarCornersAgent(SearchAgent):
     "A SearchAgent for FoodSearchProblem using A* and your foodHeuristic"
@@ -461,7 +472,23 @@ def foodHeuristic(state, problem):
     """
     position, foodGrid = state
     "*** YOUR CODE HERE ***"
-    return 0
+    food = foodGrid.asList()
+    if len(food) == 0:
+        return 0
+    elif len(food) == 1:
+        return util.manhattanDistance(position, food[0])
+    else:
+        max = -1
+        min = 999999
+        for element in food:
+            distance = util.manhattanDistance(position, element)
+            if distance < min:
+                min = distance
+                minElem = element
+            if distance > max:
+                max = distance
+                maxElem = element
+        return min + util.manhattanDistance(maxElem, minElem)
 
 class ClosestDotSearchAgent(SearchAgent):
     "Search for all food using a sequence of searches"
