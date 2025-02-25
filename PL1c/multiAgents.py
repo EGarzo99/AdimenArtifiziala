@@ -52,6 +52,7 @@ class ReflexAgent(Agent):
         remaining food (newFood) and Pacman position after moving (newPos).
         newScaredTimes holds the number of moves that each ghost will remain
         scared because of Pacman having eaten a power pellet.
+        GameStates (pacman.py) and returns a number, where higher numbers are better.
 
         Print out these variables to see what you're getting, then combine them
         to create a masterful evaluation function.
@@ -63,11 +64,32 @@ class ReflexAgent(Agent):
         newGhostStates = successorGameState.getGhostStates()
         newScaredTimes = [ghostState.scaredTimer for ghostState in newGhostStates]
         
-        # ghostState.getposiion()
+        newGhostPos = [ghostState.getPosition() for ghostState in newGhostStates]
         # return the ghost position
 
         "*** YOUR CODE HERE ***"
-        return successorGameState.getScore()
+        if (newPos in newGhostPos):
+            if (newScaredTimes[0] > 0):
+                return 999999
+            else:
+                return -999999
+            
+        foodList = newFood.asList()
+        closestFood = 999999
+        for food in foodList:
+            distance = manhattanDistance(newPos, food)
+            if distance < closestFood:
+                closestFood = distance
+
+        closestGhost = 999999
+        for ghost in newGhostPos:
+            distance = manhattanDistance(newPos, ghost)
+            if distance < closestGhost:
+                closestGhost = distance
+        foodGrade = 100/(closestFood+0.01)
+        ghostGrade = 10/(closestGhost+0.01)
+        return  foodGrade
+        
 
 def scoreEvaluationFunction(currentGameState):
     """
