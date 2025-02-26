@@ -73,6 +73,8 @@ class ReflexAgent(Agent):
                 return 999999
             else:
                 return -999999
+        if (action == 'Stop'):
+            return -999999
             
         foodList = food.asList()
         closestFood = 999999
@@ -80,7 +82,7 @@ class ReflexAgent(Agent):
             distance = manhattanDistance(newPos, foodPos)
             if distance < closestFood:
                 closestFood = distance
-                
+
         foodGrade = 100/(closestFood+0.01)
         return  foodGrade
         
@@ -147,9 +149,41 @@ class MinimaxAgent(MultiAgentSearchAgent):
         Returns the ghost position
         """
 
-
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        v = -999999
+        bestAction = Directions.STOP
+        for action in gameState.getLegalActions(0):
+            temp = self.mini_max(gameState.generateSuccessor(0, action), self.depth, 1)
+            if(temp > v):
+                v = temp
+                bestAction = action
+        return bestAction
+
+        
+    def mini_max(self, gameState, depth, agentIndex):
+        if(gameState.isWin() or gameState.isLose() or depth == 0):
+            return self.evaluationFunction(gameState)
+        if(agentIndex == 0):
+            return self.maxi(gameState, depth)
+        else:
+            return self.mini(gameState, depth, agentIndex)
+
+    def maxi(self, gameState, depth):
+        v = -999999
+        for action in gameState.getLegalActions(0):
+            v = max(v, self.mini_max(gameState.generateSuccessor(0, action), depth, 1))
+        return v
+
+    def mini(self, gameState, depth, index):
+        v = 999999
+        if(index+1 == gameState.getNumAgents()):
+            for action in gameState.getLegalActions(index):
+                v = min(v, self.mini_max(gameState.generateSuccessor(index, action), depth-1, 0))
+        else:
+            for action in gameState.getLegalActions(index):
+                v = min(v, self.mini_max(gameState.generateSuccessor(index, action), depth, index+1))
+        return v
+
 
 class AlphaBetaAgent(MultiAgentSearchAgent):
     """
