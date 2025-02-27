@@ -159,7 +159,6 @@ class MinimaxAgent(MultiAgentSearchAgent):
                 bestAction = action
         return bestAction
 
-        
     def mini_max(self, gameState, depth, agentIndex):
         if(gameState.isWin() or gameState.isLose() or depth == 0):
             return self.evaluationFunction(gameState)
@@ -195,7 +194,45 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
         Returns the minimax action using self.depth and self.evaluationFunction
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        alfa = -999999
+        beta = 999999
+        v = -999999
+        bestAction = Directions.STOP
+        for action in gameState.getLegalActions(0):
+            v = self.min_value(gameState.generateSuccessor(0, action), self.depth, 1, alfa, beta)
+            if v > alfa:
+                alfa = v
+                bestAction = action
+        return bestAction
+
+    def max_value(self, gameState, depth, alpha, beta):
+        if gameState.isWin() or gameState.isLose() or depth == 0:
+            return self.evaluationFunction(gameState)
+        v = -999999
+        for action in gameState.getLegalActions(0):
+            v = max(v, self.min_value(gameState.generateSuccessor(0, action), depth, 1, alpha, beta))
+            if v > beta:
+                return v
+            alpha = max(alpha, v)
+        return v
+    
+    def min_value(self, gameState, depth, agentIndex, alpha, beta):
+        if gameState.isWin() or gameState.isLose() or depth == 0:
+            return self.evaluationFunction(gameState)
+        v = 999999
+        if agentIndex + 1 == gameState.getNumAgents():
+            for action in gameState.getLegalActions(agentIndex):
+                v = min(v, self.max_value(gameState.generateSuccessor(agentIndex, action), depth - 1, alpha, beta))
+                if v < alpha:
+                    return v
+                beta = min(beta, v)
+        else:
+            for action in gameState.getLegalActions(agentIndex):
+                v = min(v, self.min_value(gameState.generateSuccessor(agentIndex, action), depth, agentIndex + 1, alpha, beta))
+                if v < alpha:
+                    return v
+                beta = min(beta, v)
+        return v
 
 class ExpectimaxAgent(MultiAgentSearchAgent):
     """
