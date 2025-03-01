@@ -293,9 +293,9 @@ def betterEvaluationFunction(currentGameState):
     Pos = currentGameState.getPacmanPosition()
     food = currentGameState.getFood()
     GhostStates = currentGameState.getGhostStates()
+    ScaredTimes = [ghostState.scaredTimer for ghostState in GhostStates]
     GhostPos = [ghostState.getPosition() for ghostState in GhostStates]
     foodList = food.asList()
-    # return the ghost position
 
     score = currentGameState.getScore()
 
@@ -304,7 +304,6 @@ def betterEvaluationFunction(currentGameState):
     if (currentGameState.isLose()):
         return -999999
 
-    
     #hurbileneko janaria kalkulatu
     alpha = 10
     beta = 3  # Adjust these constants as needed
@@ -312,13 +311,14 @@ def betterEvaluationFunction(currentGameState):
         distance = manhattanDistance(Pos, foodPos)
         score += alpha * math.exp(-distance / beta)
 
+
     #penalizatu mamuetatik hurbil egotea
     for i in range(0, len(GhostPos)):
         distance = manhattanDistance(Pos, GhostPos[i])
         if (ScaredTimes[i] > 0):
             score += alpha * math.exp(-distance / beta)
         else:
-            score -= 1 * math.exp(-distance / beta)
+            score -= 100 * math.exp(-distance / beta)
 
     return  score
 
