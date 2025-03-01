@@ -4,7 +4,7 @@
 
 from util import manhattanDistance
 from game import Directions
-import random, util
+import random, util, math
 
 from game import Agent
 
@@ -290,7 +290,37 @@ def betterEvaluationFunction(currentGameState):
     DESCRIPTION: <write something here so we know what you did>
     """
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    Pos = currentGameState.getPacmanPosition()
+    food = currentGameState.getFood()
+    GhostStates = currentGameState.getGhostStates()
+    GhostPos = [ghostState.getPosition() for ghostState in GhostStates]
+    foodList = food.asList()
+    # return the ghost position
+
+    score = currentGameState.getScore()
+
+    if (currentGameState.isWin()):
+        return 999999
+    if (currentGameState.isLose()):
+        return -999999
+
+    
+    #hurbileneko janaria kalkulatu
+    alpha = 10
+    beta = 3  # Adjust these constants as needed
+    for foodPos in foodList:
+        distance = manhattanDistance(Pos, foodPos)
+        score += alpha * math.exp(-distance / beta)
+
+    #penalizatu mamuetatik hurbil egotea
+    for i in range(0, len(GhostPos)):
+        distance = manhattanDistance(Pos, GhostPos[i])
+        if (ScaredTimes[i] > 0):
+            score += alpha * math.exp(-distance / beta)
+        else:
+            score -= 1 * math.exp(-distance / beta)
+
+    return  score
 
 # Abbreviation
 better = betterEvaluationFunction
