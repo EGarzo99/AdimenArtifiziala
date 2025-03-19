@@ -86,7 +86,6 @@ class MiraClassifier:
                         self.updateWeights(trainingData[i], trainingLabels[i], selectedLabel, c)
             weigths.append(self.weights)
                 
-        
         self.weights = self.calcBestWeight(weigths, validationData, validationLabels)     
             
     
