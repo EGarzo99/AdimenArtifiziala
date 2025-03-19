@@ -39,8 +39,17 @@ class MiraClassifier:
         return self.trainAndTune(trainingData, trainingLabels, validationData, validationLabels, Cgrid)
 
     
-    def calcBestWeight():
-        pass
+    def calcBestWeight(self, weigths, data, labels):
+        bestWeight = weigths[0]
+        bestCorrect = 0
+        for weight in weigths:
+            self.weights = weight
+            guesses = self.classify(data)
+            correct = [guesses[i] == labels[i] for i in range(len(guesses))].count(True)
+            if correct > bestCorrect:
+                bestCorrect = correct
+                bestWeight = weight
+        return bestWeight
 
 
     def updateWeights(self, data, label, selectedLabel, c):
