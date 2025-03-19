@@ -47,21 +47,18 @@ class PerceptronClassifier:
         self.features = trainingData[0].keys() # could be useful later
         # DO NOT ZERO OUT YOUR WEIGHTS BEFORE STARTING TRAINING, OR
         # THE AUTOGRADER WILL LIKELY DEDUCT POINTS.
-        
-       
-
+    
+        klasePosiblea = util.Counter()
         for iteration in range(self.max_iterations):
             print ("Starting iteration ", iteration, "...")
             for i in range(len(trainingData)):
-                score = 0
                 for label in self.legalLabels:
-                    nextscore = self.weights[label] * trainingData[i]
-                    score = max(score, nextscore)
-                    if score != nextscore:
-                        correct = label
-                if correct != trainingLabels[i]:
-                    #ZUZENDU
-                    pass
+                    score = self.weights[label] * trainingData[i]
+                    klasePosiblea[label] = score
+                selectedLabel = klasePosiblea.argMax()
+                if selectedLabel != trainingLabels[i]:
+                    self.weights[trainingLabels[i]] = self.weights[trainingLabels[i]] + trainingData[i]
+                    self.weights[selectedLabel] = self.weights[selectedLabel] - trainingData[i]
         
         
     def classify(self, data ):
@@ -75,10 +72,13 @@ class PerceptronClassifier:
         
              
         guesses = []
-        #for i in range(len(data)):
-           
-
-
+        klasePosiblea = util.Counter()
+        for i in range(len(data)):
+            for label in self.legalLabels:
+                score = self.weights[label] * data[i]
+                klasePosiblea[label] = score
+            selectedLabel = klasePosiblea.argMax()
+            guesses.append(selectedLabel)
 
         return guesses
     
