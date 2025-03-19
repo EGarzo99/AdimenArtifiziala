@@ -39,8 +39,22 @@ class MiraClassifier:
         return self.trainAndTune(trainingData, trainingLabels, validationData, validationLabels, Cgrid)
 
     
-    def validation():
+    def calcBestWeight():
         pass
+
+
+    def updateWeights(self, data, label, selectedLabel, c):
+        self.weights[label] = self.weights[label] + data
+        self.weights[selectedLabel] = self.weights[selectedLabel] - data
+
+    def classifyInstance(self, data, labels ,c):
+        klasePosiblea = util.Counter()
+        for label in self.legalLabels:
+            score = self.weights[label] * data
+            klasePosiblea[label] = score
+            return klasePosiblea.argMax()
+
+
     
     def trainAndTune(self, trainingData, trainingLabels, validationData, validationLabels, Cgrid):
         
@@ -50,28 +64,21 @@ class MiraClassifier:
         
 
         self.features = trainingData[0].keys()
+        weigths = []
 
         newWeights = self.weights.copy()
         for c in Cgrid:
             self.weights = newWeights.copy()
-            klasePosiblea = util.Counter()
             for iteration in range(self.max_iterations):
                 print ("Starting iteration ", iteration, "...")
                 for i in range(len(trainingData)):
-                    for label in self.legalLabels:
-                        score = self.weights[label] * trainingData[i]
-                        klasePosiblea[label] = score
-                    selectedLabel = klasePosiblea.argMax()
+                    selectedLabel = self.classifyInstance(trainingData[i], trainingLabels[i], c)
                     if selectedLabel != trainingLabels[i]:
-                        self.weights[trainingLabels[i]] = self.weights[trainingLabels[i]] + trainingData[i]
-                        self.weights[selectedLabel] = self.weights[selectedLabel] - trainingData[i]
-
-        validation()
-
+                        self.updateWeights(trainingData[i], trainingLabels[i], selectedLabel, c)
+            weigths.append(self.weights)
                 
         
-
-        self.weights = bestWeight        
+        self.weights = self.calcBestWeight(weigths, validationData, validationLabels)     
             
     
              
