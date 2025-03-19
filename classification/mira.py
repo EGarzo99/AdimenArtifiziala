@@ -53,15 +53,23 @@ class MiraClassifier:
 
 
     def updateWeights(self, data, label, selectedLabel, c):
-        self.weights[label] = self.weights[label] + data
-        self.weights[selectedLabel] = self.weights[selectedLabel] - data
+        tau = min(c, ((self.weights[selectedLabel] - self.weights[label]) * data + 1.0) /(2*(util.Counter(data) * data)))
+        # tauxdata = [tau * elem for elem in data.values()]
+        tauxdata = data.copy()
+        for key in tauxdata.keys():
+            tauxdata[key] = tauxdata[key] * tau
+        self.weights[label] = self.weights[label] + tauxdata
+        self.weights[selectedLabel] = self.weights[selectedLabel] - tauxdata
+        
 
-    def classifyInstance(self, data, labels ,c):
+        
+
+    def classifyInstance(self, data, labels):
         klasePosiblea = util.Counter()
         for label in self.legalLabels:
             score = self.weights[label] * data
             klasePosiblea[label] = score
-            return klasePosiblea.argMax()
+        return klasePosiblea.argMax()
 
 
     
@@ -81,7 +89,7 @@ class MiraClassifier:
             for iteration in range(self.max_iterations):
                 print ("Starting iteration ", iteration, "...")
                 for i in range(len(trainingData)):
-                    selectedLabel = self.classifyInstance(trainingData[i], trainingLabels[i], c)
+                    selectedLabel = self.classifyInstance(trainingData[i], trainingLabels[i])
                     if selectedLabel != trainingLabels[i]:
                         self.updateWeights(trainingData[i], trainingLabels[i], selectedLabel, c)
             weigths.append(self.weights)
