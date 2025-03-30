@@ -108,6 +108,31 @@
     (while (< 0 (div ?a ?lag))
         (bind $?lista (insert$ $?lista (+ 1(length$ $?lista)) (mod ?a ?lag)))
         (bind ?a (div ?a ?lag))
-        (printout t $?lista " " crlf)
-    ) 
+    )
+    (bind $?lista (insert$ $?lista (+ 1(length$ $?lista)) (mod ?a ?lag)))
+    (bind $?listaReverse (create$))
+    (loop-for-count (?i 0 (- (length$ $?lista) 1))
+        (bind ?temp (nth$ (- (length$ $?lista) ?i) $?lista))
+        (bind $?listaReverse (insert$ $?listaReverse (+ 1(length$ $?listaReverse)) ?temp))
+    )
+    (if (eq $?lista $?listaReverse) then
+        (return TRUE)
+    else
+        (return FALSE)
+    )
 )   
+
+(deffunction lehenengoX ()
+    (printout t "Sartu X zenbakia: ")
+    (bind ?x (read))
+    (bind ?i 0)
+    (bind ?n 2); 2-rekin hasi gaitezke 1 eta 0 zuzenean lehenak ez direlako
+    (while (< ?i ?x)
+        (if (and (lehenaDa ?n) (kapikuaDa ?n)) then
+            (bind ?i (+ ?i 1))
+            (printout t ?n " zenbakia " ?i ". zenbaki lehena eta kapikua da." crlf)
+        )
+        (bind ?n (+ ?n 1))
+    )
+    (return True)
+)
