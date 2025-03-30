@@ -136,3 +136,23 @@
     )
     (return True)
 )
+
+;10. ARIKETA
+(deffunction erdiguneaDa(?a)
+    (bind ?batura 0)
+    (bind ?batura2 0)
+    (loop-for-count (?i 1 (- ?a 1))
+        (bind ?batura (+ ?batura ?i))
+    )
+    (bind ?j (+ ?a 1))
+    (while (< ?batura2 ?batura)
+        (bind ?batura2 (+ ?batura2 ?j))
+        (if (= ?batura2 ?batura) then
+            (printout t ?a " zenbakia erdigunea da." crlf)
+            (return TRUE)
+        )
+        (bind ?j (+ ?j 1))
+    )
+    (printout t ?a " zenbakia ez da erdigunea." crlf)
+    (return FALSE)
+)
