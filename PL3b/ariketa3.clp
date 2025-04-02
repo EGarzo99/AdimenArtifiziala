@@ -4,7 +4,6 @@
     (slot balio (type INTEGER))
 ) 
 
- 
 
 (defrule erregela1 
     (declare (salience 10)) 

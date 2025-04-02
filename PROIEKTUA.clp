@@ -1,0 +1,5 @@
+
+(defftemplate tablero
+  (multislot casillas)
+  
+)
