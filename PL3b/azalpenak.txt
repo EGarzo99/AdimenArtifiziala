@@ -3,14 +3,21 @@
 
 2. Ariketa
 
+    1. Elementua aldagaia 1 balioarekin hasieratzen da, eta bider 2 egiten zaio 9 baino handiagoa izan arte, lortutako balioa beti erakusten. 
 
 3. Ariketa
 
 
 4. Ariketa
 
+    1. Fibonacci segida kalkulatzen du. Totala aldagaiarekin segidaren zenbatgarren elementua kalkulatuko den adierazten da.
+    3. 5 izango zen output-a. 6 ziklo beharko dira.
+    4. 7 eta 8-ekin output-a 8 eta 13 izango lirateke. Egingo diren zikloak totala aldagaiaren berdinak izango dira.
+    5. Sarrera horrekin azkeneko erregelara joango litzateke programa, eta ERROR printeatuko luke.
 
 5. Ariketa
 
 
 6. Ariketa
+
+    1. Elementu aldagai motatik balioa hartzen du eta balio horren faktoriala kalkulatzen du. 
