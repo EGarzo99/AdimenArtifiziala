@@ -1,20 +1,20 @@
 1. Ariketa
-1-
-Batura: erregela hau balio aldagaiaren balioa handitzeaz arduratzen da, iterazio bakoitzean +1 eginez.  salience 10-ek erregelaren lehentasuna zehazten digu erregela bat baino gehiago exekutatzea posible denean.
+    1-
+    Batura: erregela hau balio aldagaiaren balioa handitzeaz arduratzen da, iterazio bakoitzean +1 eginez.  salience 10-ek erregelaren lehentasuna zehazten digu erregela bat baino gehiago exekutatzea posible denean.
 
-Gelditu: erregela hau balio  10 baino handiagoa denean exekutatuko da. Kasu horretan, batura erregelak baino lehentasun handiagoa duenez, arau hau exektutatuko da batura erregela beharrean. Gelditu funtzioak halt deituko du eta berez exekuzioa geldituko da.
+    Gelditu: erregela hau balio  10 baino handiagoa denean exekutatuko da. Kasu horretan, batura erregelak baino lehentasun handiagoa duenez, arau hau exektutatuko da batura erregela beharrean. Gelditu funtzioak halt deituko du eta berez exekuzioa geldituko da.
 
-Hasierako_balioak: Balio-ren hasierako balioa zehazten du, 1.
-3-
-Batura erregela 9 aldiz exekutatzen da. Hau gertatzen da, hasierako fact(balio 1)-etik abiatuta, erregela bakoitzean balio faktoreari 1 gehitzen diolako, eta gelditu erregelak programa gelditzen duelako balio 10 baino handiagoa denean.
+    Hasierako_balioak: Balio-ren hasierako balioa zehazten du, 1.
+    3-
+    Batura erregela 9 aldiz exekutatzen da. Hau gertatzen da, hasierako fact(balio 1)-etik abiatuta, erregela bakoitzean balio faktoreari 1 gehitzen diolako, eta gelditu erregelak programa gelditzen duelako balio 10 baino handiagoa denean.
 
-Batura erregela gertaera berdinarekin behin bakarrik exekutatzen da. Hau da, (balio ?x) faktore bakoitza behin bakarrik erabiltzen da erregela exekutatzeko
+    Batura erregela gertaera berdinarekin behin bakarrik exekutatzen da. Hau da, (balio ?x) faktore bakoitza behin bakarrik erabiltzen da erregela exekutatzeko
 2. Ariketa
 
     1. Elementua aldagaia 1 balioarekin hasieratzen da, eta bider 2 egiten zaio 9 baino handiagoa izan arte, lortutako balioa beti erakusten. 
 
 3. Ariketa
-Max funtzio bat da. Jasotako elementuen artean binaka konparatzen doa, txikiena ezabatuz eta handiena mantenduz. Elementu bakarra geratzen denean, pantailaratu egiten du.
+    Max funtzio bat da. Jasotako elementuen artean binaka konparatzen doa, txikiena ezabatuz eta handiena mantenduz. Elementu bakarra geratzen denean, pantailaratu egiten du.
 
 4. Ariketa
 
@@ -26,8 +26,4 @@ Max funtzio bat da. Jasotako elementuen artean binaka konparatzen doa, txikiena 
 
 
 6. Ariketa
-<<<<<<< Updated upstream
-
-    1. Elementu aldagai motatik balioa hartzen du eta balio horren faktoriala kalkulatzen du. 
-=======
->>>>>>> Stashed changes
+    1. Elementu aldagai motatik balioa hartzen du eta balio horren faktoriala   kalkulatzen du.
